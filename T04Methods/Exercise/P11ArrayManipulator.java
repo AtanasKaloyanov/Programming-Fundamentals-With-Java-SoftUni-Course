@@ -212,6 +212,7 @@ public class P11ArrayManipulator {
         printArr(bufferArr);
     }
 
+
     private static void printArr(int[] array) {
         System.out.print("[");
         boolean printFirst = true;
