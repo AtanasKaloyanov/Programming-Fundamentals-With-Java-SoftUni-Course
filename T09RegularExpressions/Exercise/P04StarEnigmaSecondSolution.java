@@ -46,9 +46,9 @@ public class P04StarEnigmaSecondSolution {
             }
         }
         System.out.printf("Attacked planets: %d%n", attackedPlanets.size());
-        attackedPlanets.stream().sorted(String::compareTo).forEach(p -> System.out.printf("-> %s%n", p));
+        attackedPlanets.stream().sorted((a,b) -> a.compareTo(b)).forEach(p -> System.out.printf("-> %s%n", p));
 
         System.out.printf("Destroyed planets: %d%n", destroyedPlanets.size());
-        destroyedPlanets.stream().sorted(String::compareTo).forEach(p -> System.out.printf("-> %s%n", p));
+        destroyedPlanets.stream().sorted((a, b) -> a.compareTo(b)).forEach(p -> System.out.printf("-> %s%n", p));
     }
 }
