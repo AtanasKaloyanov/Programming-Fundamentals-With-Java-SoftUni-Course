@@ -97,6 +97,7 @@ public class P06VehicleCatalogue {
         if (vehicles.size() == 0) {
             return 0;
         }
-        return vehicles.stream().mapToDouble(Vehicle::getHorsePower).sum() / vehicles.size();
+        return vehicles.stream().mapToDouble(Vehicle -> Vehicle.getHorsePower()).sum() / vehicles.size();
+        //return vehicles.stream().mapToDouble(Vehicle::getHorsePower).sum() / vehicles.size();
     }
 }
