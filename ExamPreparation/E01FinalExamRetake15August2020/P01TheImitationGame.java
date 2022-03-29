@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class P01TheImiyayionGame {
+public class P01TheImitationGame {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -20,7 +20,6 @@ public class P01TheImiyayionGame {
             switch (command) {
                 case "Move":
                     int numberLetters = Integer.parseInt(information[1]);
-
 
                     String string = sb.substring(0, numberLetters);
                     sb.delete(0, numberLetters);
