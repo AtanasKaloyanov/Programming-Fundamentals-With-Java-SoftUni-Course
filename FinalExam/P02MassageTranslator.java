@@ -40,6 +40,7 @@ public class P02MassageTranslator {
                     int number2 = (int) currentChar;
                     list.add(number2);
                 }
+
                 System.out.printf("%s: ", matcher2.group("alfa"));
              System.out.printf("%s%n", list.toString().replaceAll("[\\[\\],]", ""));
             }

@@ -55,7 +55,7 @@ public class P03Followers {
                 case "New follower":
                     users.putIfAbsent(currentName, user);
                     break;
-                    
+
                 case "Like":
                     if (users.containsKey(currentName)) {
                         int likes = users.get(currentName).getLikes();
@@ -94,7 +94,6 @@ public class P03Followers {
             line = scanner.nextLine();
         }
         System.out.printf("%d followers %n", users.size());
-
         users.forEach((key, value) -> {
             System.out.printf("%s: ", key);
             System.out.printf("%d%n", users.get(key).getComments() + users.get(key).getLikes());

@@ -136,8 +136,7 @@ public class P01PasswordValidator {
                         System.out.println("Password must consist at least one digit!");
                     }
                     break;
-
-
+                    
             }
             input = scanner.nextLine();
         }
