@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class P01 {
+public class P01PasswordValidator {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         StringBuilder sb = new StringBuilder(scanner.nextLine());
@@ -141,6 +141,6 @@ public class P01 {
             }
             input = scanner.nextLine();
         }
-        
+
     }
 }
