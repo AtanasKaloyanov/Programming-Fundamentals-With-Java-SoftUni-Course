@@ -4,21 +4,23 @@ import java.util.Scanner;
 
 public class P09Orders {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int orders = Integer.parseInt(scanner.nextLine());
 
-        int countOrders = Integer.parseInt(scanner.nextLine());
-        double totalPrice = 0;
-
-        for (int i = 1; i <= countOrders; i++) {
-
-            double pricePerCapsule = Double.parseDouble(scanner.nextLine());
+        // 2. Coffee price adn total sum computation via for loop
+        double totalSum = 0;
+        for (int i = 0; i < orders; i++) {
+            double capsulePrice = Double.parseDouble(scanner.nextLine());
             int days = Integer.parseInt(scanner.nextLine());
             int capsuleCount = Integer.parseInt(scanner.nextLine());
 
-            double orderPrice = pricePerCapsule * days * capsuleCount;
-            System.out.printf("The price for the coffee is: $%.2f%n", orderPrice);
-            totalPrice = totalPrice + orderPrice;
+            double currentCoffeePrice = capsulePrice * days * capsuleCount;
+            System.out.printf("The price for the coffee is: $%.2f\n", currentCoffeePrice);
+            totalSum += currentCoffeePrice;
         }
-        System.out.printf("Total: $%.2f", totalPrice);
+
+        // 3. Output printing
+        System.out.printf("Total: $%.2f", totalSum);
     }
 }

@@ -4,94 +4,60 @@ import java.util.Scanner;
 
 public class P03Vacation {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int n = Integer.parseInt(scanner.nextLine());
+        String clientType = scanner.nextLine();
+        String dayOfWeek = scanner.nextLine();
 
-        int numberPeople = Integer.parseInt(scanner.nextLine());
-        String typeOfGroup = scanner.nextLine();
-        String dayOfStay = scanner.nextLine();
-
-        double sum = 0;
-
-        switch (typeOfGroup) {
+        // 2. Ticket's price assignment
+        double ticketPrice = 0;
+        switch (clientType) {
             case "Students":
-
-                switch (dayOfStay) {
-                    case "Friday":
-                        sum = numberPeople * 8.45;
-                        break;
-
-                    case "Saturday":
-                        sum = numberPeople * 9.80;
-                        break;
-
-                    case "Sunday":
-                        sum = numberPeople * 10.46;
-                        break;
+                if (dayOfWeek.equals("Friday")) {
+                    ticketPrice = 8.45;
+                } else if (dayOfWeek.equals("Saturday")) {
+                    ticketPrice = 9.80;
+                } else {
+                    ticketPrice = 10.46;
                 }
 
-                if (numberPeople >= 30) {
-                    sum = 0.85 * sum;
+                if (n >= 30) {
+                    ticketPrice *= 0.85;
                 }
                 break;
-
 
             case "Business":
-                switch (dayOfStay) {
-                    case "Friday":
-                        sum = numberPeople * 10.90;
-
-                        if (numberPeople >= 100) {
-                            sum = sum - 10 * 10.90;
-                        }
-
-                        break;
-
-
-                    case "Saturday":
-                        sum = numberPeople * 15.60;
-
-                        if (numberPeople >= 100) {
-                            sum = sum - 10 * 15.60;
-                        }
-
-                        break;
-
-                    case "Sunday":
-                        sum = numberPeople * 16.00;
-
-                        if (numberPeople >= 100) {
-                            sum = sum - 10 * 16.00;
-                        }
-
-                        break;
+                if (dayOfWeek.equals("Friday")) {
+                    ticketPrice = 10.90;
+                } else if (dayOfWeek.equals("Saturday")) {
+                    ticketPrice = 15.60;
+                } else {
+                    ticketPrice = 16;
                 }
 
+                if (n >= 100) {
+                    n -= 10;
+                }
                 break;
-
 
             case "Regular":
-                switch (dayOfStay) {
-                    case "Friday":
-                        sum = numberPeople * 15.00;
-                        break;
-
-                    case "Saturday":
-                        sum = numberPeople * 20.00;
-                        break;
-
-                    case "Sunday":
-                        sum = numberPeople * 22.50;
-                        break;
+                if (dayOfWeek.equals("Friday")) {
+                    ticketPrice = 15;
+                } else if (dayOfWeek.equals("Saturday")) {
+                    ticketPrice = 20;
+                } else {
+                    ticketPrice = 22.50;
                 }
 
-                if (numberPeople >= 10 && numberPeople <= 20) {
-                    sum = 0.95 * sum;
+                if (n >= 10 && n <= 20) {
+                    ticketPrice *= 0.95;
                 }
                 break;
-
         }
 
+        // 3. Sum computation and printing
+        double sum = n * ticketPrice;
         System.out.printf("Total price: %.2f", sum);
-
     }
 }

@@ -4,33 +4,40 @@ import java.util.Scanner;
 
 public class P06StrongNumber {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int number = Integer.parseInt(scanner.nextLine());
 
-        //Write a program to check if a given number is a strong number or not.
-        // A number is strong if the sum of the Factorial of each digit is equal to the number.
-        // For example 145 is a strong number, because 1! + 4! + 5! = 145.
-        // Print "yes" if the number is strong and "no" if the number is not strong.
+        // 2. Factorial computation
+        String stringNumber = String.valueOf(number);
+        int end = stringNumber.length();
 
-        int givenNumber = Integer.parseInt(scanner.nextLine());
-        String stringNumber = "" + givenNumber;
+        int factSum = 0;
+        for (int i = 0; i < end; i++) {
+            char currentChar = stringNumber.charAt(i);
+            int currenCharNumber = Integer.parseInt(String.valueOf(currentChar));
 
-        int sumFactorial = 0;
-
-        for (int i = 0; i <= stringNumber.length() - 1; i++) {
-            int currentNumber = Integer.parseInt("" + stringNumber.charAt(i));
-
-            int factorial = 1;
-
-            for (int j = 1; j <= currentNumber; j++) {
-                factorial = factorial * j;
-            }
-            sumFactorial = sumFactorial + factorial;
+            int currentFact = factorial(currenCharNumber);
+            factSum += currentFact;
         }
-        if (sumFactorial == givenNumber) {
+
+        // 3. Output printing
+        if (factSum == number) {
             System.out.println("yes");
         } else {
             System.out.println("no");
         }
+    }
+    private static int factorial(int number) {
+        if (number == 0 || number == 1) {
+            return 1;
+        }
+
+        int fact = 1;
+        for (int i = number; i >= 2; i--) {
+            fact *= i;
+        }
+        return fact;
     }
 }
 

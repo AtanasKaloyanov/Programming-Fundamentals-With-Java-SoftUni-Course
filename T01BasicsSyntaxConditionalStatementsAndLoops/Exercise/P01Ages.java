@@ -4,21 +4,25 @@ import java.util.Scanner;
 
 public class P01Ages {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
         int age = Integer.parseInt(scanner.nextLine());
 
+        // 2. Output assignment
+        String output = null;
         if (age <= 2) {
-            System.out.println("baby");
+            output = "baby";
         } else if (age <= 13) {
-            System.out.println("child");
+            output = "child";
         } else if (age <= 19) {
-            System.out.println("teenager");
+            output = "teenager";
         } else if (age <= 65) {
-            System.out.println("adult");
-        } else if (age >= 66) {
-            System.out.println("elder");
+            output = "adult";
+        } else {
+            output = "elder";
         }
 
+        // 3. Output printing
+        System.out.println(output);
     }
 }

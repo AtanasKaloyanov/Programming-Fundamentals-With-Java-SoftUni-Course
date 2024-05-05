@@ -4,21 +4,25 @@ import java.util.Scanner;
 
 public class P11RageExpenses {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
-        int lostGamesCount = Integer.parseInt(scanner.nextLine());
+        int lostGames = Integer.parseInt(scanner.nextLine());
         double headsetPrice = Double.parseDouble(scanner.nextLine());
         double mousePrice = Double.parseDouble(scanner.nextLine());
-        double keybordPrice = Double.parseDouble(scanner.nextLine());
+        double keyboardPrice = Double.parseDouble(scanner.nextLine());
         double displayPrice = Double.parseDouble(scanner.nextLine());
 
-        double headsetTrash = Math.floor(lostGamesCount * 1.00 / 2);
-        double mouseTrash = Math.floor(lostGamesCount * 1.00 / 3);
-        double keybordTrash = Math.floor(lostGamesCount * 1.00 / 6);
-        double displayTrash = Math.floor(lostGamesCount * 1.00 / 12);
+        // 2. Trashes calculating
+        int headsetTrashes = lostGames / 2;
+        int mouseTrashes = lostGames / 3;
+        int keyboardTrashes = lostGames / 6;
+        int displayTrashes = lostGames / 12;
 
-        double expenses = headsetTrash * headsetPrice + mouseTrash * mousePrice + keybordTrash * keybordPrice + displayTrash * displayPrice;
-        System.out.printf("Rage expenses: %.2f lv.", expenses);
+        // 3. Trashes costs calculating
+        double trashesCosts = headsetTrashes * headsetPrice + mouseTrashes * mousePrice
+                + keyboardTrashes * keyboardPrice + displayTrashes * displayPrice;
 
+        // 4. Output printing
+        System.out.printf("Rage expenses: %.2f lv.", trashesCosts);
     }
 }
