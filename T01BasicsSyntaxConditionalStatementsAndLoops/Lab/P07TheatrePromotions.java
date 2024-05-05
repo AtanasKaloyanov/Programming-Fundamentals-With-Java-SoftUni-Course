@@ -4,49 +4,50 @@ import java.util.Scanner;
 
 public class P07TheatrePromotions {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
-        String day = scanner.nextLine();
+        String dayType = scanner.nextLine();
         int age = Integer.parseInt(scanner.nextLine());
-        int ticket = 0;
 
-        switch (day) {
+        // 2. Ticket assignment
+        int ticketPrice = 0;
+        switch (dayType) {
             case "Weekday":
-                if (age >= 0 && age <= 18 ) {
-                    ticket = 12;
+                if (age >= 0 && age <= 18) {
+                    ticketPrice = 12;
                 } else if (age > 18 && age <= 64) {
-                    ticket = 18;
+                    ticketPrice = 18;
                 } else if (age > 64 && age <= 122) {
-                    ticket = 12;
+                    ticketPrice = 12;
                 }
-
                 break;
+
             case "Weekend":
-                if  (age >= 0 && age <= 18 ) {
-                    ticket = 15;
-                } else if  (age > 18 && age <= 64){
-                    ticket = 20;
-                } else if (age > 64 && age <= 122) {
-                    ticket = 15;
-                }
-
-                break;
-            case "Holiday":
-                if (age >= 0 && age <= 18 ) {
-                    ticket = 5;
+                if (age >= 0 && age <= 18) {
+                    ticketPrice = 15;
                 } else if (age > 18 && age <= 64) {
-                    ticket = 12;
+                    ticketPrice = 20;
                 } else if (age > 64 && age <= 122) {
-                    ticket = 10;
+                    ticketPrice = 15;
                 }
                 break;
 
-        }
-        if (ticket > 0) {
-            System.out.printf("%d$", ticket);
-        } else {
-            System.out.println("Error!");
+            case "Holiday":
+                if (age >= 0 && age <= 18) {
+                    ticketPrice = 5;
+                } else if (age > 18 && age <= 64) {
+                    ticketPrice = 12;
+                } else if (age > 64 && age <= 122) {
+                    ticketPrice = 10;
+                }
+                break;
         }
 
+        // 3. Output
+        if (ticketPrice == 0) {
+            System.out.println("Error!");
+        } else {
+            System.out.printf("%d$", ticketPrice);
+        }
     }
 }

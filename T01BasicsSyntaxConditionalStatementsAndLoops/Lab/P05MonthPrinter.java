@@ -4,54 +4,55 @@ import java.util.Scanner;
 
 public class P05MonthPrinter {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int month = Integer.parseInt(scanner.nextLine());
 
-        int number = Integer.parseInt(scanner.nextLine());
-
-        switch (number) {
+        // 2. Output assignment
+        String output = null;
+        switch (month) {
             case 1:
-                System.out.println("January");
+                output = "January";
                 break;
             case 2:
-                System.out.println("February");
+                output = "February";
                 break;
             case 3:
-                System.out.println("March");
+                output = "March";
                 break;
             case 4:
-                System.out.println("April");
+                output = "April";
                 break;
             case 5:
-                System.out.println("May");
+                output = "May";
                 break;
             case 6:
-                System.out.println("June");
+                output = "June";
                 break;
             case 7:
-                System.out.println("July");
+                output = "July";
                 break;
             case 8:
-                System.out.println("August");
+                output = "August";
                 break;
             case 9:
-                System.out.println("September");
+                output = "September";
                 break;
             case 10:
-                System.out.println("October");
+                output = "October";
                 break;
             case 11:
-                System.out.println("November");
+                output = "November";
                 break;
             case 12:
-                System.out.println("December");
+                output = "December";
                 break;
-
-
+            default:
+                output = "Error!";
+                break;
         }
 
-
-        if (number > 12 || number < 1 ) {
-            System.out.println("Error!");
-        }
+        // 3. Output printing
+        System.out.println(output);
     }
 }

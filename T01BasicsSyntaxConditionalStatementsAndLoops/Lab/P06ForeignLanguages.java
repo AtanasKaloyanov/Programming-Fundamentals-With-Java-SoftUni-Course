@@ -23,8 +23,6 @@ public class P06ForeignLanguages {
                 break;
         }
 
-
-        }
-
     }
+}
 
