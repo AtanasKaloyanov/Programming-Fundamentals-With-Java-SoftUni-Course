@@ -1,27 +1,27 @@
 package T03Arrays.Lists.Lab;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class P03SumEvenNumbers {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
-        //Read an array from the console and sum only the even numbers.
-
         String input = scanner.nextLine();
-        String[] stringArray = input. split(" ");
-        int[] numberArray = new int[stringArray.length];
+        int[] numbers = Arrays.stream(input.split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
 
+        // 2. Even sum calculating
         int sum = 0;
-
-        for (int i = 0; i < numberArray.length ; i++) {
-            numberArray[i] = Integer.parseInt(stringArray[i]);
-
-            int currentNumber = numberArray[i];
+        for (int i = 0; i < numbers.length; i++) {
+            int currentNumber = numbers[i];
             if (currentNumber % 2 == 0) {
                 sum += currentNumber;
             }
         }
+
+        // 3. Output printing
         System.out.println(sum);
     }
 }
