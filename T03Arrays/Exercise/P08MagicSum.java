@@ -1,36 +1,34 @@
-package T03Arrays.Lists.Exercise;
+package T03Arrays.Exercise;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class P08MagicSum {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int[] array = readArray(scanner);
+        int number = Integer.parseInt(scanner.nextLine());
 
-        //Write a program, which prints all unique pairs in an array of integers whose sum is equal to a given number.
-
-        int[] array = Arrays
-                .stream(scanner.nextLine().split(" "))
-                .mapToInt(Integer::parseInt)
-                .toArray();
-
-        int givenNumber = Integer.parseInt(scanner.nextLine());
-
-        for (int i = 0; i < array.length - 1; i++) {
-
-            int currenNumberI = array[i];
-
+        // 2. Finding the sum of the current and next element and if the sum is equal to the
+        // given number than printing
+        for (int i = 0; i < array.length; i++) {
+            int currentElement = array[i];
             for (int j = i + 1; j < array.length; j++) {
-
-                int currentNumberJ = array[j];
-
-                if (array[i] + array[j] == givenNumber) {
-                    System.out.printf("%d %d%n", array[i], array[j]);
+                int nextElement = array[j];
+                int sum = currentElement + nextElement;
+                if (sum == number) {
+                    System.out.printf("%d %d\n", currentElement, nextElement);
                 }
             }
 
         }
-//         1 7 6 2 19 23
+    }
+
+    private static int[] readArray(Scanner scanner) {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
     }
 }
 

@@ -1,40 +1,44 @@
-package T03Arrays.Lists.Exercise;
+package T03Arrays.Exercise;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class P03ZizZagArrays {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int n = Integer.parseInt(scanner.nextLine());
 
+        // 2. Creating 2 arrays and filling them
+        int[] output1 = new int[n];
+        int[] output2 = new int[n];
 
-        //Write a program that creates 2 arrays.
-        // You will be given an integer n. On the next n lines,
-        // you get 2 integers. Form 2 arrays as shown below.
-
-        int number = Integer.parseInt(scanner.nextLine());
-        String string = "";
-
-
-       for (int i = 0; i < number; i++) {
-
-            String text = scanner.nextLine();
-            String[] stringArray = text.split(" ");
-
-
+        for (int i = 0; i < n; i++) {
+            int[] currentArray = createArray(scanner);
+            int element1 = currentArray[0];
+            int element2 = currentArray[1];
             if (i % 2 == 0) {
-                System.out.print(stringArray[0] + " ");
-                string = string + stringArray[1] + " ";
-
+                output1[i] = element1;
+                output2[i] = element2;
             } else {
-                System.out.print(stringArray[1] + " ");
-                string = string + stringArray[0] + " ";
+                output1[i] = element2;
+                output2[i] = element1;
             }
-
-        }
-        System.out.println();
-        System.out.println(string);
         }
 
+        System.out.println(getOutputFormat(output1));
+        System.out.println(getOutputFormat(output2));
     }
+
+    private static String getOutputFormat(int[] output1) {
+        return Arrays.toString(output1).replaceAll("[\\[\\],]", "");
+    }
+
+    private static int[] createArray(Scanner scanner) {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+    }
+}
 
 

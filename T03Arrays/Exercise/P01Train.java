@@ -1,24 +1,25 @@
-package T03Arrays.Lists.Exercise;
+package T03Arrays.Exercise;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class P01Train {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int n = Integer.parseInt(scanner.nextLine());
 
-        //You will be given a count of wagons in a train n. On the next n lines,
-        // you will receive how many people are going to get on that wagon.
-        // At the end print the whole train and after that the sum of the people on the train.
-
-        int count = Integer.parseInt(scanner.nextLine());
-        int sum = 0;
-
-        for (int i = 1; i <= count ; i++) {
-            int travellers = Integer.parseInt(scanner.nextLine());
-            sum += travellers;
-            System.out.print(travellers + " ");
+        // 2. Array filling via for cycle
+        int[] array = new int[n];
+        for (int i = 0; i < n; i++) {
+            int currentNumber = Integer.parseInt(scanner.nextLine());
+            array[i] = currentNumber;
         }
-        System.out.println();
+
+        // 3. Output printing
+        String firstLine = Arrays.toString(array).replaceAll("[\\[\\],]", "");
+        System.out.println(firstLine);
+        int sum = Arrays.stream(array).sum();
         System.out.println(sum);
     }
 }

@@ -1,47 +1,61 @@
-package T03Arrays.Lists.Exercise;
+package T03Arrays.Exercise;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class P06EqualSums {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int[] array = readArray(scanner);
 
-        //Write a program that determines if there exists an element in the array such that the sum of the elements
-        // on its left is equal to the sum of the elements on its right.
-        // If there are no elements to the left/right,
-        // their sum is considered to be 0. Print the index that satisfies the required condition or "no" if there is no such index.
+        // 2. Finding index
+        int index = -1;
+        boolean hasSpecialElement = false;
+        for (int i = 0; i < array.length; i++) {
+            // 2.1. Left sum computation
+            int leftSum = getLeftSum(array, i);
 
-        int[] intArray = Arrays
-                .stream(scanner.nextLine().split(" "))
-                .mapToInt(Integer::parseInt)
-                .toArray();
+            // 2.2. Right sum computation
+            int rightSum = getRightSum(array, i);
 
-        boolean isFound = false;
-
-        for (int index = 0; index <= intArray.length - 1 ; index++) {
-
-            int currentElement = intArray[index];
-
-            int leftSum = 0;
-            int rightSum = 0;
-
-            for (int leftIndex = 0; leftIndex < index; leftIndex++) {
-                leftSum += intArray[leftIndex];
-            }
-            for (int rightIndex = index + 1; rightIndex <= intArray.length - 1 ; rightIndex++) {
-                rightSum += intArray[rightIndex];
-            }
-
-            if (rightSum == leftSum) {
-                System.out.println(index);
-                isFound = true;
+            // 2.3. Check if the element is equal to the left and rght sum
+            if (leftSum == rightSum) {
+                hasSpecialElement = true;
+                index = i;
+                break;
             }
         }
 
-        if (!isFound) {
+        // 3. Output - 2 cases:
+        if (hasSpecialElement) {
+            System.out.println(index);
+        } else {
             System.out.println("no");
         }
 
+    }
+    private static int getLeftSum(int[] array, int i) {
+        int leftSum = 0;
+        for (int j = i - 1; j >= 0 ; j--) {
+            int currentLeftElement = array[j];
+            leftSum += currentLeftElement;
+        }
+        return leftSum;
+    }
+
+    private static int getRightSum(int[] array, int i) {
+        int rightSum = 0;
+        for (int j = i + 1; j < array.length; j++) {
+            int currentRightElement = array[j];
+            rightSum += currentRightElement;
+        }
+        return rightSum;
+    }
+
+    private static int[] readArray(Scanner scanner) {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
     }
 }

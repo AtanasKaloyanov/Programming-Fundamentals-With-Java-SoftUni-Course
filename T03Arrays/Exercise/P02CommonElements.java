@@ -1,33 +1,23 @@
-package T03Arrays.Lists.Exercise;
+package T03Arrays.Exercise;
 
 import java.util.Scanner;
 
 public class P02CommonElements {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        String[] array1 = scanner.nextLine().split(" ");
+        String[] array2 = scanner.nextLine().split(" ");
 
-        //Write a program, which prints common elements in two arrays.
-        // You have to compare the elements of the second array to the elements of the first.
-
-         String givenText = scanner.nextLine();
-         String secondGivenText = scanner.nextLine();
-
-         String[] firstArray = givenText.split(" ");
-         String[] secondArray = secondGivenText.split(" ");
-
-        for (int i = 0; i < firstArray.length ; i++) {
-           String currentElement = firstArray[i];
-            for (int j = 0; j < secondArray.length ; j++) {
-                String currentElement2 = secondArray[j];
-                if (currentElement.equals(currentElement2)) {
-                    System.out.print(currentElement2 + " ");
+        // 2. Finding the elements that are
+        // equal via 2 nested loops and printing them
+        for (String current : array2) {
+            for (String currentInner : array1) {
+                if (current.equals(currentInner)) {
+                    System.out.print(current + " ");
+                    break;
                 }
             }
-
-
         }
-
-
-
     }
 }
