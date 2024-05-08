@@ -1,4 +1,4 @@
-package T03Arrays.Lists.Lab;
+package T03Arrays.Lab;
 
 import java.util.Scanner;
 
