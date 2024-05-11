@@ -1,70 +1,39 @@
 package T04Methods.Exercise;
-
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class P10TopNumber {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
         int n = Integer.parseInt(scanner.nextLine());
-        topNumberFinding(n);
-    }
 
-    public static boolean devisionBy8(int givenNumber) {
+        // 2. Output printing via 2 nested loops
+        for (int i = 1; i <= n; i++) {
+            String numberAsString = String.valueOf(i);
+            int sum = 0;
+            boolean hasOddDigit = false;
+            for (int j = 0; j < numberAsString.length(); j++) {
+                int currentDigit = getCurrentDigit(numberAsString, j);
+                sum += currentDigit;
 
-        String stringGivenNumber = Integer.toString(givenNumber);
-
-        int[] array = Arrays
-                .stream(stringGivenNumber.split(""))
-                .mapToInt(Integer::parseInt)
-                .toArray();
-
-        int sum = 0;
-        for (int i = 0; i <= array.length - 1; i++) {
-            int currentElement = array[i];
-            sum = sum + currentElement;
-        }
-
-        if (sum % 8 == 0) {
-            return true;
-        }
-        return false;
-
-    }
-
-    public static boolean hasOddDigit(int givenNumber) {
-
-        String currentString = Integer.toString(givenNumber);
-        int[] array = Arrays
-                .stream(currentString.split(""))
-                .mapToInt(Integer::parseInt)
-                .toArray();
-
-        int oddCounter = 0;
-        for (int i = 0; i <= array.length - 1; i++) {
-            int currentElement = array[i];
-            if (currentElement % 2 != 0) {
-                oddCounter++;
+                if (currentDigit % 2 != 0) {
+                    hasOddDigit = true;
+                }
             }
+
+            numberPrinting(i, sum, hasOddDigit);
         }
-        if (oddCounter > 0) {
-            return true;
-        }
-        return false;
     }
 
-
-    public static void topNumberFinding(int givenNumber) {
-
-
-        for (int i = 0; i <= givenNumber; i++) {
-
-            if (devisionBy8(i) && hasOddDigit(i)) {
-                System.out.println(i);
-            }
+    private static void numberPrinting(int i, int sum, boolean hasOddDigit) {
+        if (sum % 8 == 0 && hasOddDigit) {
+            System.out.println(i);
         }
-
+    }
+    private static int getCurrentDigit(String numberAsString, int j) {
+        char currentChar = numberAsString.charAt(j);
+        int currentDigit = Integer.parseInt(String.valueOf(currentChar));
+        return currentDigit;
     }
 }
 

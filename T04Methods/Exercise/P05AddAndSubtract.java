@@ -4,21 +4,24 @@ import java.util.Scanner;
 
 public class P05AddAndSubtract {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int number1 = Integer.parseInt(scanner.nextLine());
+        int number2 = Integer.parseInt(scanner.nextLine());
+        int number3 = Integer.parseInt(scanner.nextLine());
 
-        int firstNumber = Integer.parseInt(scanner.nextLine());
-        int secondNumber = Integer.parseInt(scanner.nextLine());
-        int thirdNumber = Integer.parseInt(scanner.nextLine());
+        // 2. Calculations
+        int sum = add(number1, number2);
+        int difference = subtract(sum, number3);
 
-        subtract(firstNumber, secondNumber, thirdNumber);
+        // 3. Output printing
+        System.out.println(difference);
     }
-
-    public static int addition(int firstNumber, int secondNumber) {
-        return firstNumber + secondNumber;
+    private static int add(int number1, int number2) {
+        return number1 + number2;
     }
-
-    public static void subtract(int firstNumber, int secondNumber, int thirdNumber) {
-        System.out.println(addition(firstNumber, secondNumber) - thirdNumber);
+    private static int subtract(int number1, int number2) {
+        return number1 - number2;
     }
 }
 

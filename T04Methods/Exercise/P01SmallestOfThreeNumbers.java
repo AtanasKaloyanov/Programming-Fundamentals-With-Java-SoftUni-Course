@@ -4,24 +4,18 @@ import java.util.Scanner;
 
 public class P01SmallestOfThreeNumbers {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int number1 = Integer.parseInt(scanner.nextLine());
+        int number2 = Integer.parseInt(scanner.nextLine());
+        int number3 = Integer.parseInt(scanner.nextLine());
 
-        int firstNumber = Integer.parseInt(scanner.nextLine());
-        int secondNumber = Integer.parseInt(scanner.nextLine());
-        int thirdNumber = Integer.parseInt(scanner.nextLine());
-
-        System.out.println(smallestNumber(firstNumber, secondNumber, thirdNumber));
+        // 2. Finding the greatest number
+        int greatestNumber = getMin(number1, number2, number3);
+        System.out.println(greatestNumber);
     }
 
-    public static int smallestNumber(int firstNumber, int secondNumber, int thirdNumber) {
-        int min = Integer.MAX_VALUE;
-        if (firstNumber < min) {
-            min = firstNumber;
-        } if (secondNumber < min) {
-            min = secondNumber;
-        } if (thirdNumber < min){
-            min = thirdNumber;
-        }
-        return min;
+    private static int getMin(int number1, int number2, int number3) {
+        return Math.min(Math.min(number1, number2), number3);
     }
 }

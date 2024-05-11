@@ -4,32 +4,20 @@ import java.util.Scanner;
 
 public class P03CharactersInRange {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        char char1 = scanner.nextLine().charAt(0);
+        char char2 = scanner.nextLine().charAt(0);
 
-        char firsCharacter = scanner.nextLine().charAt(0);
-        char secondCharacter = scanner.nextLine().charAt(0);
+        // 2. Begin and end calculations
+        int start = Math.min(char1, char2);
+        int end = Math.max(char1, char2);
 
-        if (firsCharacter < secondCharacter) {
-            printCharacters(firsCharacter, secondCharacter);
-        } else {
-            secondPrint(firsCharacter, secondCharacter);
+        // 3. Result printing
+        for (int i = start + 1; i < end; i++) {
+            char currentChar = (char) i;
+            System.out.print(currentChar + " ");
         }
-    }
 
-    public static void printCharacters(char firsCharacter, char secondCharacter) {
-        for (int i = firsCharacter; i <= secondCharacter; i++) {
-            if (i != firsCharacter && i != secondCharacter) {
-                System.out.print((char) i + " ");
-            }
-        }
     }
-
-    public static void secondPrint(char firsCharacter, char secondCharacter) {
-        for (int i = secondCharacter; i <= firsCharacter; i++) {
-            if (i != firsCharacter && i != secondCharacter) {
-                System.out.print((char) i + " ");
-            }
-        }
-    }
-
 }

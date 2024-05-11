@@ -5,22 +5,29 @@ import java.util.Scanner;
 
 public class P02VowelsCount {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
 
-      String givenString = scanner.nextLine();
-        System.out.println(countVowels(givenString));
-
+        // 2. Vowels counting and printing
+        int vowelCounter = vowelCounting(input);
+        System.out.println(vowelCounter);
     }
-    public static int countVowels(String givenString) {
 
-        givenString = givenString.toLowerCase();
-        int count = 0;
-        for (int i = 0; i <= givenString.length() - 1 ; i++) {
-            char currentChar = givenString.charAt(i);
-            if (currentChar =='a' || currentChar == 'e' || currentChar == 'i' || currentChar == 'o' || currentChar == 'u') {
-                count ++;
+    private static int vowelCounting(String input) {
+        int counter = 0;
+        for (int i = 0; i < input.length(); i++) {
+            char currentChar = Character.toLowerCase(input.charAt(i));
+            if (isVowel(currentChar)) {
+                counter++;
             }
         }
-        return count;
+        return counter;
+    }
+
+    private static boolean isVowel(char currentChar) {
+        return currentChar == 'a'
+                || currentChar == 'e' || currentChar == 'i'
+                || currentChar == 'o' || currentChar == 'u';
     }
 }
