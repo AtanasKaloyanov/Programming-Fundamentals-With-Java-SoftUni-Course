@@ -1,6 +1,5 @@
 package T05ListsArraysAdvanced.Exercise;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -8,41 +7,39 @@ import java.util.stream.Collectors;
 
 public class P02ChangeList {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        List<Integer> list = readArray(scanner);
 
-        List<Integer> numbers = Arrays.stream(scanner.nextLine().split(" ")).map(Integer::parseInt).collect(Collectors.toList());
-
+        // 2. Commands implementation
         String input = scanner.nextLine();
-
         while (!input.equals("end")) {
+            String[] currentArray = input.split(" ");
+            String command = currentArray[0];
 
-            List<String> list = Arrays.stream(input.split(" ")).collect(Collectors.toList());
-
-            String command = list.get(0);
-
-            if (command.equals("Delete")) {
-
-                int deleteNumber = Integer.parseInt(list.get(1));
-
-                while (numbers.contains(deleteNumber)) {
-                    numbers.remove(Integer.valueOf(deleteNumber));
-                }
-
-            } else if (command.equals("Insert")) {
-
-                int addingNumber = Integer.parseInt(list.get(1));
-                int addingIndex = Integer.parseInt(list.get(2));
-
-                numbers.add(addingIndex, addingNumber);
+            switch (command) {
+                case "Delete":
+                    int removeNumber = Integer.parseInt(currentArray[1]);
+                    list.removeIf( (element) -> element == removeNumber);
+                    break;
+                case "Insert":
+                    int insertNumber = Integer.parseInt(currentArray[1]);
+                    int insertIndex = Integer.parseInt(currentArray[2]);
+                    list.add(insertIndex, insertNumber);
+                    break;
 
             }
-
             input = scanner.nextLine();
         }
 
-        for (int number : numbers) {
-            System.out.print(number + " ");
-        }
+        // 3. Output printing
+        System.out.println(list.toString().replaceAll("[\\[\\],]", ""));
 
+    }
+
+    private static List<Integer> readArray(Scanner scanner) {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
     }
 }

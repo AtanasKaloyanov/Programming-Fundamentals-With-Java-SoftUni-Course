@@ -1,54 +1,46 @@
 package T05ListsArraysAdvanced.Exercise;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class P06CardsGame {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        Queue<Integer> cards1 = readCards(scanner);
+        Queue<Integer> cards2 = readCards(scanner);
 
-        List<Integer> firstPlayerCards = Arrays.stream(scanner.nextLine().split(" ")).map(Integer::parseInt).collect(Collectors.toList());
-        List<Integer> secondPlayerCards = Arrays.stream(scanner.nextLine().split(" ")).map(Integer::parseInt).collect(Collectors.toList());
+        // 2. While cycle until some of the list becomes empty
+        while (cards1.size() > 0 && cards2.size() > 0) {
+            int card1 = cards1.poll();
+            int card2 = cards2.poll();
 
-        while (firstPlayerCards.size() != 0 && secondPlayerCards.size() != 0) {
-
-           int firstCardOfTheFirstPlayer =  firstPlayerCards.get(0) ;
-           int firstCardOfTheSecondPlayer =  secondPlayerCards.get(0) ;
-
-           if (firstCardOfTheFirstPlayer > firstCardOfTheSecondPlayer) {
-
-               firstPlayerCards.add(firstPlayerCards.size(), firstCardOfTheFirstPlayer);
-               firstPlayerCards.remove(0);
-               firstPlayerCards.add(firstPlayerCards.size(), firstCardOfTheSecondPlayer);
-               secondPlayerCards.remove(0);
-
-
-           } else if (firstCardOfTheFirstPlayer < firstCardOfTheSecondPlayer) {
-
-               secondPlayerCards.add(secondPlayerCards.size(), firstCardOfTheSecondPlayer);
-               secondPlayerCards.remove(0);
-               secondPlayerCards.add(secondPlayerCards.size(), firstCardOfTheFirstPlayer);
-               firstPlayerCards.remove(0);
-
-           } else  {
-               firstPlayerCards.remove(0);
-               secondPlayerCards.remove(0);
-           }
-        }
-        if (firstPlayerCards.size() == 0) {
-           int sum = 0;
-            for (int card : secondPlayerCards) {
-                sum += card;
+            if (card1 > card2) {
+                cards1.add(card1);
+                cards1.add(card2);
+            } else if (card2 > card1) {
+                cards2.add(card2);
+                cards2.add(card1);
             }
-            System.out.printf("Second player wins! Sum: %d", sum);
+        }
+
+        // 3. 2 variables assignment and output printing
+        int winnerSum;
+        String winner;
+        if (cards1.size() == 0) {
+            winnerSum = cards2.stream().mapToInt( (element) -> element).sum();
+            winner = "Second";
         } else {
-            int sum = 0;
-            for (int card : firstPlayerCards) {
-                sum += card;
-            }
-            System.out.printf("First player wins! Sum: %d", sum);
+            winnerSum = cards1.stream().mapToInt( (element) -> element).sum();
+            winner = "First";
         }
+
+        System.out.printf("%s player wins! Sum: %d", winner, winnerSum);
+    }
+
+    private static ArrayDeque<Integer> readCards(Scanner scanner) {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toCollection(ArrayDeque::new));
     }
 }

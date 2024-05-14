@@ -7,116 +7,103 @@ import java.util.stream.Collectors;
 
 public class P10SoftUniCoursePlanning {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        List<String> list = readList(scanner);
 
-        List<String> schedule = Arrays.stream(scanner.nextLine().split(", ")).collect(Collectors.toList());
-
-        // Първоначален лист - Arrays, Lists, Methods     Arrays, Lists, Methods
-        // Команден лист -     Swap:Arrays:Methods        Methods, Lists, Arrays
-        // Команден лист -     Exercise:Databases         Methods, Lists, Arrays, Databases, Databases-Exercise
-        // Команден лист -     Swap:Lists:Databases       Methods, Databases, Databases-Exercise, Arrays, Lists
-        // Команден лист -     Insert:Arrays:0            Methods, Databases, Databases-Exercise, Arrays, Lists
-        // Край на цикъла -    course start
+        // 2. Commands implementations
         String input = scanner.nextLine();
-
         while (!input.equals("course start")) {
-
-            List<String> currentList = Arrays.stream(input.split(":")).collect(Collectors.toList());
-
-            String command = currentList.get(0); //Възможни команди : Add, Insert, Remove, Swap, Exercise
-            String leessonTitle = currentList.get(1); //Заглавието на урока
-
-            switch (command) {
-
+            String[] currentArray = input.split(":");
+            String currentCommand = currentArray[0];
+            String currentTitle = currentArray[1];
+            String currentExercise = currentTitle + "-Exercise";
+            switch (currentCommand) {
                 case "Add":
-
-                    boolean doesExist = schedule.contains(leessonTitle);
-
-                    if (!doesExist) {
-                        schedule.add(schedule.size(), leessonTitle);
+                    if (!list.contains(currentTitle)) {
+                        list.add(currentTitle);
                     }
-
                     break;
-
                 case "Insert":
-
-                    int index = Integer.parseInt(currentList.get(2));
-                    boolean doesExist2 = schedule.contains(leessonTitle);
-
-                    if (!doesExist2) {
-                        schedule.add(index, leessonTitle);
+                    if (!list.contains(currentTitle)) {
+                        int currentIndex = Integer.parseInt(currentArray[2]);
+                        if (currentIndex < 0 || currentIndex >= list.size()) {
+                            input = scanner.nextLine();
+                            continue;
+                        }
+                        list.add(currentIndex, currentTitle);
                     }
-
                     break;
-
                 case "Remove":
-
-                    boolean doesExist3 = schedule.contains(leessonTitle);
-
-                    if (doesExist3) {
-                        schedule.remove(leessonTitle);
+                    int removedIndex = list.indexOf(currentTitle);
+                    if (removedIndex != -1) {
+                        list.remove(currentTitle);
+                        if (removedIndex != list.size() && !list.isEmpty()) {
+                            String elementAfterRemovedElement = list.get(removedIndex);
+                            if (elementAfterRemovedElement.equals(currentExercise)) {
+                                list.remove(currentExercise);
+                            }
+                        }
                     }
 
                     break;
-
                 case "Swap":
+                    String currentTitle2 = currentArray[2];
+                    int firstLessonIndex = list.indexOf(currentTitle);
+                    int secondLessonIndex = list.indexOf(currentTitle2);
 
-                    String secondLesson = currentList.get(2);
-                    boolean doesExist4 = schedule.contains(leessonTitle);
-                    boolean doesExist5 = schedule.contains(secondLesson);
-
-                    if (doesExist4 && doesExist5) {
-
-                        int firstIndex = schedule.indexOf(leessonTitle);
-                        int secondIndex = schedule.indexOf(secondLesson);
-
-                        schedule.set(firstIndex, secondLesson);
-                        schedule.set(secondIndex, leessonTitle);
-
-                        String firstExercise = leessonTitle + "-Exercise";
-                        String secondExercise = secondLesson + "-Exercise";
-
-                        if (schedule.contains(firstExercise)) {
-                            schedule.remove(firstExercise);
-                            schedule.add(secondIndex + 1, firstExercise);
+                    if (firstLessonIndex != -1 && secondLessonIndex != -1) {
+                        list.set(firstLessonIndex, currentTitle2);
+                        list.set(secondLessonIndex, currentTitle);
+                        int exerciseIndex1 = list.indexOf(currentExercise);
+                        if (exerciseIndex1 != -1) {
+                            list.remove(currentExercise);
+                            list.add(secondLessonIndex + 1 , currentExercise);
                         }
 
-                        if (schedule.contains(secondExercise)) {
-                            schedule.remove(secondExercise);
-                            schedule.add(firstIndex + 1, secondExercise);
+                        String exercise2 = currentTitle2 + "-Exercise";
+                        int exerciseIndex2 = list.indexOf(exercise2);
+                        if (exerciseIndex2 != -1) {
+                            list.remove(exercise2);
+                            list.add(firstLessonIndex + 1, exercise2);
                         }
+
                     }
-
                     break;
-
                 case "Exercise":
+                    int index = list.indexOf(currentTitle);
 
-                    boolean doesExist6 = schedule.contains(leessonTitle);
-
-                    String exercise = leessonTitle + "-Exercise";
-                    boolean doesExist7 = schedule.contains(exercise);
-
-                    int lessonIndex = schedule.indexOf(leessonTitle);
-
-                    if (doesExist6 && !doesExist7) {
-                        schedule.add(lessonIndex + 1, exercise);
+                    if (index == list.size() - 1) {
+                        list.add(currentExercise);
+                    } else if (index != -1) {
+                        String elementAfterLab = list.get(index + 1);
+                        if (!elementAfterLab.equals(currentExercise)) {
+                            list.add(index + 1, currentExercise);
+                        }
+                    } else {
+                        list.add(currentTitle);
+                        list.add(currentExercise);
                     }
-
-                    if (!doesExist6) {
-                        schedule.add(schedule.size(), leessonTitle);
-                        schedule.add(schedule.size(), exercise);
-                    }
-
                     break;
+                    /*
+                    Arrays, Lists, Methods
+                    Exercise:Methods
+                    course start
+                     */
             }
-
             input = scanner.nextLine();
         }
-        int i = 0;
-        for (String currentElement : schedule) {
 
-            System.out.printf("%d.%s%n", i+1, currentElement);
-             i++;
+        // 2. Output printing
+        for (int i = 0; i < list.size(); i++) {
+            int currentNumber = i + 1;
+            String currentObject = list.get(i);
+            System.out.printf("%d.%s\n", currentNumber, currentObject);
         }
+    }
+
+    public static List<String> readList(Scanner scanner) {
+        return Arrays.stream(scanner.nextLine().split(", "))
+                .collect(Collectors.toList());
     }
 }

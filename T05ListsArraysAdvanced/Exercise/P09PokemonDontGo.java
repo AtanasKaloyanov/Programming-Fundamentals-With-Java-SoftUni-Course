@@ -7,71 +7,50 @@ import java.util.stream.Collectors;
 
 public class P09PokemonDontGo {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        List<Integer> list = readList(scanner);
 
-
-        List<Integer> pokemons = Arrays.stream(scanner.nextLine().split(" ")).map(Integer::parseInt).collect(Collectors.toList());
+        // 2. 3 cases of removing and / or adding, then sum calculation.
         int sum = 0;
+        while (!list.isEmpty()) {
+            int currentIndex = Integer.parseInt(scanner.nextLine());
+            int removedNumber;
 
-        while (pokemons.size() != 0) {
-            int index = Integer.parseInt(scanner.nextLine());
+            if (currentIndex < 0) {
+                removedNumber = list.remove(0);
+                int lastNumber = list.get(list.size() - 1);
+                list.add(0, lastNumber);
+            } else if (currentIndex >= list.size()) {
+                removedNumber = list.remove(list.size() - 1);
+                int firstNumber = list.get(0);
+                list.add(firstNumber);
+            } else {
+                removedNumber = list.remove(currentIndex);
+            }
 
-            if (index >= 0 && index <= pokemons.size() - 1) {
-                int catchedPokemon = pokemons.get(index);
-                pokemons.remove(index);
-                sum = sum + catchedPokemon;
+            sum = getSum(list, sum, removedNumber);
+        }
 
-                for (int i = 0; i < pokemons.size(); i++) {
-                    int currentPokemon = pokemons.get(i);
-                    if (currentPokemon <= catchedPokemon) {
-                        int biggerPokemon = currentPokemon + catchedPokemon;
-                        pokemons.set(i, biggerPokemon);
+        System.out.println(sum);
+    }
 
-                    } else if (currentPokemon > catchedPokemon) {
-                        int smallerPokemon = currentPokemon - catchedPokemon;
-                        pokemons.set(i, smallerPokemon);
-                    }
-                }
-
-            } else if (index < 0) {
-                int firstPokemon = pokemons.get(0);
-                pokemons.remove(0);
-                int lastPokemon = pokemons.get(pokemons.size() - 1);
-                pokemons.add(0, lastPokemon);
-
-                for (int i = 0; i < pokemons.size(); i++) {
-                    int currentPokemon = pokemons.get(i);
-                    if (currentPokemon <= firstPokemon) {
-                        int biggerPokemon = currentPokemon + firstPokemon;
-                        pokemons.set(i, biggerPokemon);
-
-                    } else if (currentPokemon > firstPokemon) {
-                        int smallerPokemon = currentPokemon - firstPokemon;
-                        pokemons.set(i, smallerPokemon);
-                    }
-                }
-                sum = sum + firstPokemon;
-
-            } else if (index > pokemons.size() - 1) {
-                int lastPokemon = pokemons.get(pokemons.size() - 1);
-                pokemons.remove(pokemons.size() - 1);
-                int firstPokemon = pokemons.get(0);
-                pokemons.add(pokemons.size(), firstPokemon);
-
-                for (int i = 0; i < pokemons.size(); i++) {
-                    int currentPokemon = pokemons.get(i);
-                    if (currentPokemon <= lastPokemon) {
-                        int biggerPokemon = currentPokemon + lastPokemon;
-                        pokemons.set(i, biggerPokemon);
-
-                    } else if (currentPokemon > lastPokemon) {
-                        int smallerPokemon = currentPokemon - lastPokemon;
-                        pokemons.set(i, smallerPokemon);
-                    }
-                }
-                sum = sum + lastPokemon;
+    private static int getSum(List<Integer> list, int sum, int removedNumber) {
+        sum += removedNumber;
+        for (int i = 0; i < list.size(); i++) {
+            int currentNumber = list.get(i);
+            if (currentNumber <= removedNumber) {
+                list.set(i, currentNumber + removedNumber);
+            } else {
+                list.set(i, currentNumber - removedNumber);
             }
         }
-        System.out.println(sum);
+        return sum;
+    }
+
+    private static List<Integer> readList(Scanner scanner) {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
     }
 }

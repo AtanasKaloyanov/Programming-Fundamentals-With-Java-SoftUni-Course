@@ -8,37 +8,33 @@ import java.util.stream.Collectors;
 
 public class P03HouseParty {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int n = Integer.parseInt(scanner.nextLine());
+        List<String> list = new ArrayList<>();
 
+        // 2. Commands implementation
+        for (int i = 0; i < n; i++) {
+            String[] currentArray = scanner.nextLine().split(" ");
+            String currentName = currentArray[0];
+            String command = currentArray[2];
 
-        int number = Integer.parseInt(scanner.nextLine());
-
-        List<String> partyAnimals = new ArrayList<>();
-
-        for (int i = 1; i <= number; i++) {
-
-            List<String> commands = Arrays.stream(scanner.nextLine().split(" ")).collect(Collectors.toList());
-
-            boolean isHere = partyAnimals.contains(commands.get(0));
-            String name = commands.get(0);
-
-            if (commands.get(2).equals("going!") && !isHere) {
-                partyAnimals.add(name);
+            if (command.equals("going!")) {
+                if (!list.contains(currentName)) {
+                    list.add(currentName);
+                } else {
+                    System.out.printf("%s is already in the list!\n", currentName);
+                }
+            } else {
+                if (list.contains(currentName)) {
+                    list.remove(currentName);
+                } else {
+                    System.out.printf("%s is not in the list!\n", currentName);
+                }
             }
-            if (commands.get(2).equals("going!") && isHere) {
-                System.out.printf("%s is already in the list!%n", name );
-            }
-            if (commands.get(2).equals("not") && !isHere) {
-                System.out.printf("%s is not in the list!%n", name );
-            }
-            if (commands.get(2).equals("not") && isHere) {
-                partyAnimals.remove(name);
-            }
-
         }
 
-        for (String currentName : partyAnimals) {
-            System.out.println(currentName);
-        }
+        // 3. Output printing
+        list.forEach(System.out::println);
     }
 }
