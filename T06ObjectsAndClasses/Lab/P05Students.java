@@ -1,83 +1,55 @@
 package T06ObjectsAndClasses.Lab;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
-public class P05Students { static class Students {
+public class P05Students {
+    static class Student {
+        private String firstName;
+        private String lastName;
+        private int age;
+        private String homeTown;
 
-    String firstName;
-    String lastName;
-    String age;
-    String hometown;
+        public Student(String firstName, String lastName, int age, String homeTown) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.age = age;
+            this.homeTown = homeTown;
+        }
 
-    public String getFirstName() {
-        return firstName;
+        @Override
+        public String toString() {
+            return String.format("%s %s is %d years old", this.firstName, this.lastName, this.age);
+        }
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public String getHometown() {
-        return hometown;
-    }
-
-    public void setHometown(String hometown) {
-        this.hometown = hometown;
-    }
-}
+    //                homeTown
+    private static Map<String, List<Student>> studenstByTown = new LinkedHashMap<>();
 
     public static void main(String[] args) {
-
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
         String input = scanner.nextLine();
 
-        List<Students> studentsList = new ArrayList<>();
-
+        // 2. While cycle algorithm
         while (!input.equals("end")) {
-            String[] studentInformation = input.split(" ");
+            String[] currentArray = input.split(" ");
+            String currentFirstName = currentArray[0];
+            String currentLastName = currentArray[1];
+            int currentAge = Integer.parseInt(currentArray[2]);
+            String currentHomeTown = currentArray[3];
 
-            String firstName = studentInformation[0];
-            String lastName = studentInformation[1];
-            String age = studentInformation[2];
-            String hometown = studentInformation[3];
-
-            Students students = new Students();
-
-            students.setFirstName(firstName);
-            students.setLastName(lastName);
-            students.setAge(age);
-            students.setHometown(hometown);
-
-            studentsList.add(students);
+            Student student = new Student(currentFirstName, currentLastName, currentAge, currentHomeTown);
+            studenstByTown.putIfAbsent(currentHomeTown, new ArrayList<>());
+            studenstByTown.get(currentHomeTown).add(student);
 
             input = scanner.nextLine();
         }
 
-        String command = scanner.nextLine();
-
-        for (Students info : studentsList) {
-            if (info.getHometown().equals(command)) {
-                System.out.printf("%s %s is %s years old%n", info.getFirstName(), info.getLastName(), info.getAge());
-            }
+        // 3. Final key reading and output printing
+        String searchedTown = scanner.nextLine();
+        List<Student> searchedStudents = studenstByTown.get(searchedTown);
+        for (Student student : searchedStudents) {
+            System.out.println(student);
         }
     }
 }
