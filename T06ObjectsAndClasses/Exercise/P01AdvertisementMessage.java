@@ -5,36 +5,31 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class P01AdvertisementMessage {
-    public static class Message {
-        String[] phrases = {"Excellent product.", "Such a great product.", "I always use that product.", "Best product of its category.", "Exceptional product.", "I can’t live without this product."};
-        String[] events = {"Now I feel good.", "I have succeeded with this product.", "Makes miracles. I am happy of the results!", "I cannot believe but now I feel awesome.", "Try it yourself, I am very satisfied.", "I feel great!"};
-        String[] autors = {"Diana", "Petya", "Stella", "Elena", "Katya", "Iva", "Annie", "Eva"};
-        String[] cities = {"Burgas", "Sofia", "Plovdiv", "Varna", "Ruse"};
-
-        public void printing(int number) {
-            for (int i = 1; i <= number; i++) {
-
-            Random random = new Random();
-
-            int randomPhrase = random.nextInt(phrases.length);
-            int randomEvent = random.nextInt(events.length);
-            int randomAuthor = random.nextInt(autors.length);
-            int randomCity = random.nextInt(cities.length);
-
-                System.out.printf("%s %s %s - %s%n", this.phrases[randomPhrase], this.events[randomEvent], this.autors[randomAuthor], this.cities[randomCity]);
-            }
-        }
-    }
+    private final static String[] PHRASES = {"Excellent product.", "Such a great product.", "I always use that product.", "Best product of its category.", "Exceptional product.", "I can’t live without this product."};
+    private final static String[] EVENTS = {"Now I feel good.", "I have succeeded with this product.", "Makes miracles. I am happy of the results!", "I cannot believe but now I feel awesome.", "Try it yourself, I am very satisfied.", "I feel great!"};
+    private final static String[] AUTHORS = {"Diana", "Petya", "Stella", "Elena", "Katya", "Iva", "Annie", "Eva"};
+    private final static String[] CITIES = {"Burgas", "Sofia", "Plovdiv", "Varna", "Ruse"};
 
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int n = Integer.parseInt(scanner.nextLine());
 
-        int numberOfPrinting = Integer.parseInt(scanner.nextLine());
+        // 2. Using of class Random for a random message
+        Random random = new Random();
+        for (int i = 0; i < n; i++) {
+            int randomPhraseIndex = random.nextInt(PHRASES.length);
+            int randomEventIndex = random.nextInt(EVENTS.length);
+            int randomAuthorIndex = random.nextInt(AUTHORS.length);
+            int randomCityIndex = random.nextInt(CITIES.length);
 
-        Message message = new Message();
+            String randomPhrase = PHRASES[randomPhraseIndex];
+            String randomEvent = EVENTS[randomEventIndex];
+            String randomAuthor = AUTHORS[randomAuthorIndex];
+            String randomCity = CITIES[randomCityIndex];
 
-        message.printing(numberOfPrinting);
-
+            System.out.printf("%s %s %s – %s\n", randomPhrase, randomEvent, randomAuthor, randomCity);
+        }
     }
 
 }

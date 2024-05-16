@@ -1,15 +1,13 @@
 package T06ObjectsAndClasses.Exercise;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class P02Articles {
 
-    public static class Article {
-        String title;
-        String content;
-        String author;
+    static class Article {
+        private String title;
+        private String content;
+        private String author;
 
         public Article(String title, String content, String author) {
             this.title = title;
@@ -17,74 +15,50 @@ public class P02Articles {
             this.author = author;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setContent(String content) {
+        public void edit(String content) {
             this.content = content;
         }
 
-        public String getContent() {
-            return content;
-        }
-
-        public void setAuthor(String author) {
+        public void changeAuthor(String author) {
             this.author = author;
         }
 
-        public String getAuthor() {
-            return author;
+        public void rename(String title) {
+            this.title = title;
         }
 
         @Override
         public String toString() {
-           return String.format("%s - %s: %s", this.title, this.content, this.author);
+            return this.title + " - " + this.content + ": " + this.author;
         }
-
-
     }
 
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        String[] info = scanner.nextLine().split(", ");
+        int n = Integer.parseInt(scanner.nextLine());
 
-        String[] input = scanner.nextLine().split(", ");
-
-        String title = input[0];
-        String content = input[1];
-        String author = input[2];
-
+        String title = info[0];
+        String content = info[1];
+        String author = info[2];
         Article article = new Article(title, content, author);
 
-        int numberCommands = Integer.parseInt(scanner.nextLine());
-
-        for (int i = 1; i <= numberCommands; i++) {
-
-            String[] currentArray = scanner.nextLine().split(": ");
-
-            String command = currentArray[0];
-            String newInformation = currentArray[1];
-
-            switch (command) {
-                case "Edit":
-                    article.setContent(newInformation);
-                    break;
-
-                case "ChangeAuthor":
-                    article.setAuthor(newInformation);
-                    break;
-
-                case "Rename":
-                    article.setTitle(newInformation);
-                    break;
+        // 2. Command implementation
+        for (int i = 0; i < n; i++) {
+            String currentInfo = scanner.nextLine();
+            String[] currentArray = currentInfo.split(": ");
+            String newInfo = currentArray[1];
+            if (currentInfo.startsWith("Edit")) {
+                article.edit(newInfo);
+            } else if (currentInfo.startsWith("ChangeAuthor")) {
+                article.changeAuthor(newInfo);
+            } else if (currentInfo.startsWith("Rename")) {
+                article.rename(newInfo);
             }
         }
 
-        System.out.println(article.toString());
-
+        // 3. Output printing
+        System.out.println(article);
     }
 }

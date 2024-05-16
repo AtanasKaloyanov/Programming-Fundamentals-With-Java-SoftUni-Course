@@ -3,7 +3,7 @@ package T06ObjectsAndClasses.Exercise;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class P05Strudents {
+public class P04Strudents {
     public static class Student {
         String firstName;
         String lastName;
