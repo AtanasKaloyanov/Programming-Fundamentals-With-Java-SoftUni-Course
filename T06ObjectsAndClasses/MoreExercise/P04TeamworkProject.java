@@ -7,14 +7,13 @@ public class P04TeamworkProject {
         // 1. Input reading
         Scanner scanner = new Scanner(System.in);
         int n = Integer.parseInt(scanner.nextLine());
-        // creator   team
-        Set<String> creators = new HashSet<>();
-        // team
-        Set<String> teams = new HashSet<>();
-        //   team       member
-        Map<String, Set<String>> membersSetByTeam = new LinkedHashMap<>();
-        //   member  team
-        Map<String, String> teamsByMember = new LinkedHashMap<>();
+
+        //   team   creator
+        Map<String, String> creatorsByTeam = new TreeMap<>();
+        // creator    members
+        Map<String, Set<String>> membersSetByCreator = new HashMap<>();
+        // members
+        Set<String> members = new HashSet<>();
 
         // 2. Creating of the teams
         for (int i = 0; i < n; i++) {
@@ -22,17 +21,15 @@ public class P04TeamworkProject {
             String currentCreator = currentArray[0];
             String currentTeam = currentArray[1];
 
-            if (teams.contains(currentTeam)) {
+            if (creatorsByTeam.containsKey(currentTeam)) {
                 System.out.printf("Team %s was already created!\n", currentTeam);
-            } else if (creators.contains(currentCreator)) {
+            } else if (membersSetByCreator.containsKey(currentCreator)) {
                 System.out.printf("%s cannot create another team!\n", currentCreator);
             } else {
+                creatorsByTeam.put(currentTeam, currentCreator);
+                membersSetByCreator.put(currentCreator, new TreeSet<>());
+                members.add(currentCreator);
                 System.out.printf("Team %s has been created by %s!\n", currentTeam, currentCreator);
-                creators.add(currentCreator);
-                teams.add(currentTeam);
-                membersSetByTeam.putIfAbsent(currentTeam, new TreeSet<>());
-                membersSetByTeam.get(currentTeam).add(currentCreator);
-                teamsByMember.put(currentCreator, currentTeam);
             }
         }
 
@@ -40,41 +37,60 @@ public class P04TeamworkProject {
         String input = scanner.nextLine();
         while (!input.equals("end of assignment")) {
             String[] currentArray = input.split("->");
-            String currentUser = currentArray[0];
+            String currentMember = currentArray[0];
             String currentTeam = currentArray[1];
 
-            if (!teams.contains(currentTeam)) {
+            if (!creatorsByTeam.containsKey(currentTeam)) {
                 System.out.printf("Team %s does not exist!\n", currentTeam);
-            } else if (teamsByMember.containsKey(currentUser)) {
-                System.out.printf("Member %s cannot join team %s!\n", currentUser, currentTeam);
+            } else if (members.contains(currentMember)) {
+                System.out.printf("Member %s cannot join team %s!\n", currentMember, currentTeam);
             } else {
-                membersSetByTeam.get(currentTeam).add(currentUser);
-                teamsByMember.put(currentUser, currentTeam);
+                String currentCreator = creatorsByTeam.get(currentTeam);
+                membersSetByCreator.get(currentCreator).add(currentMember);
+                members.add(currentMember);
             }
 
             input = scanner.nextLine();
         }
 
-        // Output printing:
-        List<String> teamsToDisband = new ArrayList<>();
-        membersSetByTeam.entrySet().stream()
-                .sorted( (entry1, entry2) -> Integer.compare(entry2.getValue().size(), entry1.getValue().size()))
-                        .forEach( (entry) -> {
-                            String currentTeam = entry.getKey();
-                            Set<String> currentMembers = entry.getValue();
-                            if (currentMembers.size() == 1) {
-                                teamsToDisband.add(currentTeam);
-                            } else {
-                                System.out.println(currentTeam);
-                                for (String currentMember : currentMembers) {
-                                    
-                                    System.out.println(currentMember);
-                                }
-                            }
-                        });
+        // 4. Output printing: If the team has only a creator adding the team to list.
+        // In other case printing the output.
+        // Finally printing the information from the list.
+        Set<String> teamsOnlyWithCreator = new TreeSet<>();
+
+        creatorsByTeam.entrySet().stream()
+                .sorted( (entry1, entry2) -> {
+                    String team1 = entry1.getKey();
+                    String team2 = entry2.getKey();
+                    String creator1 = entry1.getValue();
+                    String creator2 = entry2.getValue();
+
+                    Set<String> members1 = membersSetByCreator.get(creator1);
+                    Set<String> members2 = membersSetByCreator.get(creator2);
+
+                    int result = Integer.compare(members2.size(), members1.size());
+                    if (result == 0) {
+                        result = team1.compareTo(team2);
+                    }
+
+                    return result;
+                }).forEach( (entry) -> {
+                    String team = entry.getKey();
+                    String creator = entry.getValue();
+                    Set<String> users = membersSetByCreator.get(creator);
+                    if (users.size() == 0) {
+                        teamsOnlyWithCreator.add(team);
+                    } else {
+                        System.out.println(team);
+                        System.out.printf("- %s\n", creator);
+                        for (String user : users) {
+                            System.out.printf("-- %s\n", user);
+                        }
+                    }
+                });
 
         System.out.println("Teams to disband:");
-        for (String team : teamsToDisband) {
+        for (String team : teamsOnlyWithCreator) {
             System.out.println(team);
         }
     }
