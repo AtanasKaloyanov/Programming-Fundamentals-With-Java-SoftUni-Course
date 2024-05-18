@@ -1,40 +1,35 @@
 package T07AssociateArraysDictionaries.Lab;
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class P01CountRealNumber {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        List<Double> list = readList(scanner);
 
-        //8 2 2 8 2
-
-        //  2 -> 3
-        //  8 -> 2
-
-        List<Double> list = Arrays.stream(scanner.nextLine().split(" ")).map(Double::parseDouble).collect(Collectors.toList());
-
-        Map<Double, Integer> numberAndCounts = new TreeMap<>();
-
-        for (int i = 0; i <= list.size() - 1; i++) {
-
-            double currentNum = list.get(i);
-
-            if (numberAndCounts.containsKey(currentNum)) {
-
-                numberAndCounts.put(currentNum, numberAndCounts.get(currentNum) + 1);
-
-            } else {
-                numberAndCounts.put(currentNum, 1);
-            }
+        // 2. Sorting via Tree map
+        Map<Double, Integer> occurrencesOfNumbers = new TreeMap<>();
+        for (Double number : list) {
+            occurrencesOfNumbers.putIfAbsent(number, 0);
+            int currentOcc = occurrencesOfNumbers.get(number);
+            occurrencesOfNumbers.put(number, currentOcc + 1);
         }
 
-        for (Map.Entry<Double, Integer> entry : numberAndCounts.entrySet()) {
+        // 3. Output printing
+        occurrencesOfNumbers.forEach((key, value) -> {
+            DecimalFormat df = new DecimalFormat("0.#####");
+            String keyFormat = df.format(key);
+            System.out.printf("%s -> %d\n", keyFormat, value);
+        });
+    }
 
-            System.out.printf("%.0f -> %d%n", entry.getKey(), entry.getValue());
-
-        }
-
+    private static List<Double> readList(Scanner scanner) {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .map((element) -> Double.parseDouble(element))
+                .collect(Collectors.toList());
     }
 }

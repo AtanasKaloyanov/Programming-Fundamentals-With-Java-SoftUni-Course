@@ -4,37 +4,24 @@ import java.util.*;
 
 public class P02WordSynonyms {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        int n = Integer.parseInt(scanner.nextLine());
 
-        int number = Integer.parseInt(scanner.nextLine());
+        // 2. Finding the synonyms via a map
+        Map<String, List<String>> wordsBySynonymsList = new LinkedHashMap<>();
 
-        Map<String, List<String>> wordAndSynonymsMap = new LinkedHashMap<>();
-
-        for (int i = 1; i <= number ; i++) {
-
-            String word = scanner.nextLine();
-            String synonym = scanner.nextLine();
-
-            wordAndSynonymsMap.putIfAbsent(word, new ArrayList<>());
-            wordAndSynonymsMap.get(word).add(synonym);
+        for (int i = 0; i < n; i++) {
+            String currentWord = scanner.nextLine();
+            String currentSynonym = scanner.nextLine();
+            wordsBySynonymsList.putIfAbsent(currentWord, new ArrayList<>());
+            wordsBySynonymsList.get(currentWord).add(currentSynonym);
         }
 
-        for (Map.Entry<String, List<String>> entry : wordAndSynonymsMap.entrySet()) {
-            System.out.printf("%s - %s%n", entry.getKey(), String.join(", ", entry.getValue()));
-        }
-
-
-        //Input:          Output:
-
-            //                Key:   Value:
-            // 3              cute - adorable, charming
-            //cute            smart - clever
-            //adorable
-            //cute
-            //charming
-            //smart
-            //clever
-
-
+        // 3. Output printing
+        wordsBySynonymsList.forEach( (key, value) -> {
+            String printingValue = value.toString().replaceAll("[\\[\\]]", "");
+            System.out.printf("%s - %s\n", key, printingValue);
+        });
     }
 }

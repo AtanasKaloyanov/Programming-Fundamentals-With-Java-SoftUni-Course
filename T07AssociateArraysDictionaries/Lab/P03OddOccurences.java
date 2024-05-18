@@ -1,48 +1,27 @@
 package T07AssociateArraysDictionaries.Lab;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class P03OddOccurences {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        String[] array = scanner.nextLine().split(" ");
 
-        List<String> givenList = Arrays.stream(scanner.nextLine().split(" ")).collect(Collectors.toList());
-
-        Map<String, Integer> wordAndTimesMap = new LinkedHashMap<>();
-
-        for (String word : givenList) {
-
-            String currentWord = word.toLowerCase();
-
-            if (!wordAndTimesMap.containsKey(currentWord)) {
-                wordAndTimesMap.put(currentWord, 1);
-            } else {
-                int value = wordAndTimesMap.get(currentWord);
-                wordAndTimesMap.put(currentWord, value + 1);
-            }
-
+        // 2. Finding the occurrences of the words via a map
+        Map<String, Integer> wordsByOccurrences = new LinkedHashMap<>();
+        for (String word : array) {
+            word = word.toLowerCase();
+            wordsByOccurrences.putIfAbsent(word, 0);
+            int currentOcc = wordsByOccurrences.get(word);
+            wordsByOccurrences.put(word, currentOcc + 1);
         }
 
-        List <String> printList = new ArrayList<>();
+        // 3. Output printing using a filter function
+        List<String> result = new ArrayList<>();
+        wordsByOccurrences.entrySet().stream()
+                .filter( (entry) -> entry.getValue() % 2 != 0)
+                .forEach( (entry) -> result.add(entry.getKey()));
 
-        for (Map.Entry<String, Integer> entry : wordAndTimesMap.entrySet()) {
-
-            if (entry.getValue() % 2 != 0) {
-                printList.add(entry.getKey());
-            }
-        }
-
-        System.out.println(printList.toString().replaceAll("[\\[\\]]", ""));
-
-
-        // Java C# PHP PHP JAVA C java
-
-          // java - 3
-          // c# - 1
-          // php - 2
-          // c - 1
-
-           // java, c#, c
+        System.out.println(result.toString().replaceAll("[\\[\\]]", ""));
     }
 }
