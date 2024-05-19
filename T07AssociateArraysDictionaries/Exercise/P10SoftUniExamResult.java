@@ -4,59 +4,45 @@ import java.util.*;
 
 public class P10SoftUniExamResult {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
-
-        Map<String, List<Integer>> namesAndPointsMap = new LinkedHashMap<>();
-        Map<String, Integer> languageAndNumbersMap = new LinkedHashMap<>();
-
         String input = scanner.nextLine();
 
+        // 2. Filling the maps in a while cycle
+        // participant result
+        Map<String, Integer> pointsByParticipants = new LinkedHashMap<>();
+        //language  solutions
+        Map<String, Integer> solutionsByLanguage = new LinkedHashMap<>();
+
         while (!input.equals("exam finished")) {
+            String[] currentArray = input.split("-");
+            String currentGivenParticipant = currentArray[0];
+            String currentGivenLanguage = currentArray[1];
 
-            if (input.contains("banned")) {
-
-                String[] data = input.split("-");
-                String name = data[0];
-
-                namesAndPointsMap.remove(name);
-            } else {
-
-                String[] data = input.split("-");
-                String name = data[0];
-                String language = data[1];
-                int points = Integer.parseInt(data[2]);
-
-                namesAndPointsMap.putIfAbsent(name, new ArrayList<>());
-                namesAndPointsMap.get(name).add(points);
-
-                languageAndNumbersMap.putIfAbsent(language, 0);
-                int currentValue = languageAndNumbersMap.get(language);
-                languageAndNumbersMap.put(language, currentValue + 1);
-
+            if (currentGivenLanguage.equals("banned")) {
+                pointsByParticipants.remove(currentGivenParticipant);
+                input = scanner.nextLine();
+                continue;
             }
+
+            int currentGivenPoints = Integer.parseInt(currentArray[2]);
+            pointsByParticipants.putIfAbsent(currentGivenParticipant, currentGivenPoints);
+            int currentPoints = pointsByParticipants.get(currentGivenParticipant);
+            if (currentGivenPoints > currentPoints) {
+                pointsByParticipants.put(currentGivenParticipant, currentGivenPoints);
+            }
+
+            solutionsByLanguage.putIfAbsent(currentGivenLanguage, 0);
+            int newSolutionsNumber = solutionsByLanguage.get(currentGivenLanguage) + 1;
+            solutionsByLanguage.put(currentGivenLanguage, newSolutionsNumber);
 
             input = scanner.nextLine();
         }
+
+        // 3. Output printing:
         System.out.println("Results:");
-        namesAndPointsMap.forEach((key, value) -> System.out.printf("%s | %d%n", key, value.stream().mapToInt(Integer::intValue).max().getAsInt()));
+        pointsByParticipants.forEach((key, value) -> System.out.printf("%s | %d\n", key, value));
         System.out.println("Submissions:");
-        languageAndNumbersMap.forEach((key, value) -> System.out.printf("%s - %d%n", key, value));
-        //Peter-Java-84
-        //George-C#-84
-        //George-C#-70
-        //Katy-C#-94
-        //exam finished
-
-        //Results:
-        //Peter | 84
-        //George | 84
-        //Katy | 94
-
-        //Submissions:
-        //Java - 1
-        //C# - 3
-
-
+        solutionsByLanguage.forEach((key, value) -> System.out.printf("%s - %d\n", key, value));
     }
 }

@@ -5,49 +5,22 @@ import java.util.stream.Collectors;
 
 public class P01CountCharsInAString {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
 
-        List<String> words = Arrays.stream(scanner.nextLine().split(" ")).collect(Collectors.toList());
-
-        Map<Character, Integer> charAndNumberMap = new LinkedHashMap<>();
-
-        for (String currentWord : words) {
-            for (int i = 0; i <= currentWord.length() - 1; i++) {
-
-                char currentChar = currentWord.charAt(i);
-
-                if (!charAndNumberMap.containsKey(currentChar)) {
-                    charAndNumberMap.put(currentChar, 1);
-                } else {
-                    int value = charAndNumberMap.get(currentChar);
-                    charAndNumberMap.put(currentChar, value + 1);
-                }
+        // 2. Occurrences adding
+        Map<Character, Integer> occurrencesByChar = new LinkedHashMap<>();
+        for (int i = 0; i < input.length(); i++) {
+            char currentChar = input.charAt(i);
+            if (currentChar != ' ') {
+                occurrencesByChar.putIfAbsent(currentChar, 0);
+                int currentOccurrences = occurrencesByChar.get(currentChar);
+                occurrencesByChar.put(currentChar, currentOccurrences + 1);
             }
         }
 
-        for (Map.Entry<Character, Integer> entry : charAndNumberMap.entrySet()) {
-            System.out.printf("%s -> %s%n", entry.getKey(), entry.getValue());
-        }
-
-
-        // text text text
-
-        // text : t -> 2
-        //        e -> 1
-        //        x -> 1
-
-        // text : t -> 2
-        //        e -> 1
-        //        x -> 1
-
-        // text : t -> 2
-        //        e -> 1
-        //        x -> 1
-
-        // t -> 6
-        // e -> 3
-        // x -> 3
-
-
+        // 3. Output printing
+        occurrencesByChar.forEach( (key, value) -> System.out.printf("%c -> %s\n", key, value));
     }
 }

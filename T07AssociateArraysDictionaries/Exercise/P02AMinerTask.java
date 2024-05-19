@@ -6,56 +6,24 @@ import java.util.Scanner;
 
 public class P02AMinerTask {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
-        Map<String, Integer> recourceAndQuantityMap = new LinkedHashMap<>();
-
         String input = scanner.nextLine();
 
+        // 2. Adding occurrences via map
+        Map<String, Integer> map = new LinkedHashMap<>();
+
         while (!input.equals("stop")) {
+            String currentText = input;
+            int quantity = Integer.parseInt(scanner.nextLine());
 
-                String recource = input;
-
-                if (!recourceAndQuantityMap.containsKey(recource)) {
-                    int value = Integer.parseInt(scanner.nextLine());
-                    recourceAndQuantityMap.put(recource, value);
-
-                } else {
-                    int currentValue = recourceAndQuantityMap.get(input);
-                    int addingValue = Integer.parseInt(scanner.nextLine());
-
-                    recourceAndQuantityMap.put(recource, currentValue + addingValue);
-                }
-
+            map.putIfAbsent(currentText, 0);
+            int currentOccurrences = map.get(currentText);
+            map.put(currentText, currentOccurrences + quantity);
             input = scanner.nextLine();
         }
 
-        for (Map.Entry<String, Integer> entry : recourceAndQuantityMap.entrySet()) {
-
-            System.out.printf("%s -> %s%n", entry.getKey(), entry.getValue());
-
-        }
-
-
-        //gold
-        //155
-        //silver
-        //10
-        //copper
-        //17
-        //gold
-        //15
-        //stop
-
-        // gold -> 155 + 15 = 170
-        // silver -> 10
-        // copper -> 17
-
-        //gold -> 170
-        //silver -> 10
-        //copper -> 17
-
-
-
+        // 3. Output printing
+        map.forEach( (key, value) -> System.out.printf("%s -> %d\n", key, value));
     }
 }

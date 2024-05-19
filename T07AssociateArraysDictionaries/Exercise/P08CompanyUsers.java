@@ -4,55 +4,30 @@ import java.util.*;
 
 public class P08CompanyUsers {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
         String input = scanner.nextLine();
-        Map<String, List<String>> companiesAndIDsMap = new LinkedHashMap<>();
 
+        // 2. Adding students and their grade in a map via while cycle
+        Map<String, Set<String>> employeesIdSetsByCompanies = new LinkedHashMap<>();
         while (!input.equals("End")) {
+            String[] currentArray = input.split(" -> ");
+            String currentCompanyName = currentArray[0];
+            String currentEmployeeName = currentArray[1];
 
-            String[] data = input.split(" -> ");
-
-            String company = data[0];
-            String ID = data[1];
-
-            if (!companiesAndIDsMap.containsKey(company)) {
-                companiesAndIDsMap.put(company, new ArrayList<>());
-                companiesAndIDsMap.get(company).add(ID);
-            } else {
-                if (!companiesAndIDsMap.get(company).contains(ID)) {
-                    companiesAndIDsMap.get(company).add(ID);
-                }
-            }
+            employeesIdSetsByCompanies.putIfAbsent(currentCompanyName, new LinkedHashSet<>());
+            employeesIdSetsByCompanies.get(currentCompanyName).add(currentEmployeeName);
 
             input = scanner.nextLine();
         }
 
-        for (Map.Entry<String, List<String>> entry : companiesAndIDsMap.entrySet()) {
-
-            System.out.printf("%s%n", entry.getKey());
-            for (int i = 0; i < entry.getValue().size(); i++) {
-
-                System.out.printf("-- %s%n", entry.getValue().get(i));
-
+        // 3. Output printing
+        employeesIdSetsByCompanies.forEach( (companyName, employeesSet) -> {
+            System.out.println(companyName);
+            for (String employee : employeesSet) {
+                System.out.printf("-- %s\n", employee);
             }
-        }
-
-
+        });
     }
 }
-// 1, 2 , 3, 4
 
-//SoftUni -> AA12345
-//SoftUni -> BB12345
-//Microsoft -> CC12345
-//HP -> BB12345
-//End
-
-//SoftUni
-//-- AA12345
-//-- BB12345
-//Microsoft
-//-- CC12345
-//HP
-//-- BB12345
