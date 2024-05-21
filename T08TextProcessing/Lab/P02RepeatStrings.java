@@ -4,22 +4,17 @@ import java.util.Scanner;
 
 public class P02RepeatStrings {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
 
-        // hi abc add
-        //hihiabcabcabcaddaddadd
-
-        String[] givenArray = scanner.nextLine().split(" ");
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < givenArray.length; i++) {
-            String currentWord = givenArray[i];
-
-            for (int j = 0; j < currentWord.length(); j++) {
-                sb.append(currentWord);
+        // 2. Output printing:
+        String[] currentArray = input.split(" ");
+        for (String currentString : currentArray) {
+            int n = currentString.length();
+            for (int i = 0; i < n; i++) {
+                System.out.print(currentString);
             }
         }
-        System.out.println(sb);
-
     }
 }

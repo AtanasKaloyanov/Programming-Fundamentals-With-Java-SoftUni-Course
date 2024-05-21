@@ -4,22 +4,19 @@ import java.util.Scanner;
 
 public class P03Substrings {
     public static void main(String[] args) {
+        // 1.Input reading
         Scanner scanner = new Scanner(System.in);
+        String replaceString = scanner.nextLine();
+        String input = scanner.nextLine();
+        int index = input.indexOf(replaceString);
 
-        // ice
-        //kicegiciceeb
-
-        //kgb
-
-        String removeWord = scanner.nextLine();
-        String givenWord = scanner.nextLine();
-
-        while (givenWord.contains(removeWord)) {
-            givenWord = givenWord.replace(removeWord, "");
+        // 2. Replacement
+        while (index != -1) {
+            input = input.replace(replaceString, "");
+            index = input.indexOf(replaceString);
         }
 
-        System.out.println(givenWord);
-
-
+        // 3. Output printing
+        System.out.println(input);
     }
 }
