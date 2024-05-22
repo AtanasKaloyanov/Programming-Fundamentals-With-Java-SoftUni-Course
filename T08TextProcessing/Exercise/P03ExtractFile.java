@@ -4,15 +4,19 @@ import java.util.Scanner;
 
 public class P03ExtractFile {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
         String path = scanner.nextLine();
 
+        // 2. String processing
         int lastSymbol = path.lastIndexOf("\\");
         int secondlastSymbol = path.lastIndexOf(".");
+        String fileName = path.substring(lastSymbol + 1, secondlastSymbol);
+        String fileExtension = path.substring(secondlastSymbol + 1);
 
-        System.out.printf("File name: %s%n",path.substring(lastSymbol + 1, secondlastSymbol));
-        System.out.printf("File extension: %s", path.substring(secondlastSymbol + 1));
+        // 3. Output printing:
+        System.out.printf("File name: %s%n", fileName);
+        System.out.printf("File extension: %s", fileExtension);
 
     }
 }

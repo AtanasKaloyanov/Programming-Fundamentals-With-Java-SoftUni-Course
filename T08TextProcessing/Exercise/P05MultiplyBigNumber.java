@@ -5,13 +5,13 @@ import java.util.Scanner;
 
 public class P05MultiplyBigNumber {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
-
         String firstNumber = scanner.nextLine();
         int secondNumber = Integer.parseInt(scanner.nextLine());
 
+        // 2. String processing
         StringBuilder sb = new StringBuilder();
-
         int remainder = 0;
 
         for (int i = firstNumber.length() - 1; i >= 0; i--) {
@@ -23,17 +23,16 @@ public class P05MultiplyBigNumber {
             if (i == 0) {
                 sb.insert(0, product);
             } else {
-
                 int addedNumber = product % 10;
                 sb.insert(0, addedNumber);
-
                 remainder = product / 10;
-
             }
         }
-while (sb.charAt(0) == '0' && sb.length() > 1) {
-    sb.deleteCharAt(0);
-}
+
+        // 3. Output printing:
+        while (sb.charAt(0) == '0' && sb.length() > 1) {
+            sb.deleteCharAt(0);
+        }
         System.out.println(sb);
     }
 }

@@ -4,47 +4,26 @@ import java.util.Scanner;
 
 public class P01ValidUserNames {
     public static void main(String[] args) {
+        // 1. Input reading
         Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
 
-        String[] array = scanner.nextLine().split(", ");
-
-        for (int i = 0; i < array.length; i++) {
-            String currentWord = array[i];
-
-            if (currentWord.length() >= 3 && currentWord.length() <= 16) {
-
-                boolean isValid = true;
-                for (int j = 0; j < currentWord.length(); j++) {
-                    char currentChar = currentWord.charAt(j);
-
-                    boolean isLetter = Character.isLetter(currentChar);
-                    boolean isNumber = Character.isDigit(currentChar);
-                    boolean isHyphen = currentChar == 45;
-                    boolean isUnderscope = currentChar == 95;
-
-                    if (!(isLetter || isNumber || isHyphen || isUnderscope)) {
-                        isValid = false;
-                        break;
-                    }
-
+        // 2. Printing all valid words
+        String[] words = input.split(", ");
+        for (String word : words) {
+            boolean isValid = true;
+            for (int i = 0; i < word.length(); i++) {
+                char currentChar = word.charAt(i);
+                if (Character.isLetter(currentChar) || Character.isDigit(currentChar) || currentChar == '-' || currentChar == '_') {
+                } else {
+                    isValid = false;
+                    break;
                 }
-
-                if (isValid) {
-                    System.out.println(currentWord);
-                }
-
             }
 
+            if ( (word.length() >= 3) && (word.length() <= 16) && isValid) {
+                System.out.println(word);
+            }
         }
-        //3 - 16 characters
-        //contains only letters, numbers, hyphens and underscores
-
-        //sh, too_long_username, !lleg@l ch@rs, jeffbutt
-        //jeffbutt
-
-        //Jeff, john45, ab, cd, peter-ivanov, @smith
-        //Jeff
-        //John45
-        //peter-ivanov
     }
 }
