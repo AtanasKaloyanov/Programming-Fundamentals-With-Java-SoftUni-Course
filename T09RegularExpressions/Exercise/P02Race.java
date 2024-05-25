@@ -45,7 +45,6 @@ public class P02Race {
                 }
             }
 
-
             input = scanner.nextLine();
         }
 
@@ -65,7 +64,6 @@ public class P02Race {
         System.out.printf("1st place: %s%n", sortedList.get(0));
         System.out.printf("2nd place: %s%n", sortedList.get(1));
         System.out.printf("3rd place: %s", sortedList.get(2));
-
 
     }
 }

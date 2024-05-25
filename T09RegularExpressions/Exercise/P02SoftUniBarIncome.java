@@ -4,11 +4,11 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class P03SoftUniBarIncome {
+public class P02SoftUniBarIncome {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-         String regex = "%(?<customer>[A-Z][a-z]+)%[^|$.%]*?<(?<product>\\w+)>[^|$.%]*\\|(?<quantity>\\d+)\\|[^|$.%]*?(?<price>\\d+\\.?\\d+)\\$";
+        String regex = "%(?<customer>[A-Z][a-z]+)%[^|$.%]*?<(?<product>\\w+)>[^|$.%]*\\|(?<quantity>\\d+)\\|[^|$.%]*?(?<price>\\d+\\.?\\d+)\\$";
 
         Pattern pattern = Pattern.compile(regex);
 
@@ -33,4 +33,3 @@ public class P03SoftUniBarIncome {
         System.out.printf("Total income: %.2f", totalSum);
     }
 }
-
